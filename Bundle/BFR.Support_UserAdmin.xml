@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Bundle PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Bundle disabled="true" name="BFR.Support,UserAdmin" type="business">
+  <Inheritance>
+    <Reference class="sailpoint.object.Bundle" name="FinServ"/>
+  </Inheritance>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Selector>
+    <IdentitySelector>
+      <MatchExpression and="true">
+        <MatchTerm name="ACCESSTYPE" value="Support,UserAdmin"/>
+      </MatchExpression>
+      <Summary>Identity attribute assignment rule : [Support,UserAdmin]</Summary>
+    </IdentitySelector>
+  </Selector>
+</Bundle>

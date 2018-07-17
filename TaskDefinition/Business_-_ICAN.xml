@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="Business - ICAN" resultAction="Rename" subType="Business Role Mining" type="RoleMining">
+  <Attributes>
+    <Map>
+      <entry key="bfrPrefix"/>
+      <entry key="businessRoleType" value="business"/>
+      <entry key="computeCoverage" value="false"/>
+      <entry key="containerRole" value="ICAN"/>
+      <entry key="createSubRoles" value="false"/>
+      <entry key="genContainerRole" value="false"/>
+      <entry key="itRoleType" value="it"/>
+      <entry key="mineITRoles" value="false"/>
+      <entry key="minimumRoleSize"/>
+      <entry key="orgRoleType" value="organizational"/>
+      <entry key="owner" value="spadmin"/>
+      <entry key="resultName" value="Business - ICAN"/>
+      <entry key="simulate" value="false"/>
+      <entry key="tieredIdentityMiningAttrs" value="ROLE"/>
+      <entry key="uidNaming" value="false"/>
+    </Map>
+  </Attributes>
+  <Description>
+        Mine Business Roles based on organizational and functional identity attributes
+      </Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="Business Role Mining"/>
+  </Parent>
+</TaskDefinition>

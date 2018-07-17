@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="FinServ" resultAction="Rename" subType="task_item_type_it_role_mining" type="ITRoleMining">
+  <Attributes>
+    <Map>
+      <entry key="applications" value="FinServ"/>
+      <entry key="identityFilter" value="&lt;List>&#xa;  &lt;Filter operation=&quot;IN&quot; property=&quot;links.application.id&quot;>&#xa;    &lt;Value>&#xa;      &lt;List>&#xa;        &lt;String>FinServ&lt;/String>&#xa;      &lt;/List>&#xa;    &lt;/Value>&#xa;  &lt;/Filter>&#xa;&lt;/List>&#xa;"/>
+      <entry key="includedEntitlements"/>
+      <entry key="isExcluded">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>
+      <entry key="itRoleMiningResultName" value="FinServ"/>
+      <entry key="maxCandidateRoles">
+        <value>
+          <Integer>1000</Integer>
+        </value>
+      </entry>
+      <entry key="minEntitlementsPerRole">
+        <value>
+          <Integer>0</Integer>
+        </value>
+      </entry>
+      <entry key="minIdentitiesPerRole">
+        <value>
+          <Integer>0</Integer>
+        </value>
+      </entry>
+      <entry key="populationName"/>
+      <entry key="roleMiningFilterType" value="searchByAttributes"/>
+    </Map>
+  </Attributes>
+  <Description>
+      IT Role Mining based on a population, List of applications/entitlements and thresholds.
+    </Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="New IT Role Mining"/>
+  </Parent>
+</TaskDefinition>

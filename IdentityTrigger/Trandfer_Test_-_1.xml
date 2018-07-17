@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE IdentityTrigger PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<IdentityTrigger attributeName="FINSERVID" handler="sailpoint.api.CertificationTriggerHandler" name="Trandfer Test - 1" newValueFilter="" oldValueFilter="" type="AttributeChange">
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <HandlerParameters>
+    <Attributes>
+      <Map>
+        <entry key="certificationDefinitionId" value="ff80808162437bc60162475337200007"/>
+      </Map>
+    </Attributes>
+  </HandlerParameters>
+</IdentityTrigger>

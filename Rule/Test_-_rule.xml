@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Test - rule">
+  <Description>Allows all objects to be selected (no filtering)</Description>
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="Test Rule Lib"/>
+  </ReferencedRules>
+  <Source>
+
+  import sailpoint.object.*;
+  import sailpoint.object.ProvisioningPlan.AccountRequest;
+  import sailpoint.object.ProvisioningPlan.AttributeRequest;
+  import sailpoint.api.Provisioner;
+  log.error("Entering get De Provisioning Plan ");
+
+  Identity identity = context.getObjectByName(Identity.class,"a10001");
+  String identityName = identity.getName();
+  ProvisioningPlan newPlan = new ProvisioningPlan();
+
+  List accountLinkList = new ArrayList();
+
+  accountLinkList = identity.getLinks();
+  String AUTH_APP = "HR System - Employees";
+  List accountRequestList = new ArrayList();
+  List attributeRequestList = new ArrayList();
+  AccountRequest accountRequest = null;
+  AttributeRequest attributeRequest = null;
+  String applicationName = null;
+  AccountRequest roleRequest = null;
+  List roleAttributeRequests = new ArrayList();
+
+  if(null != accountLinkList &amp;&amp; !accountLinkList.isEmpty()){
+
+    for(Link accountLink : accountLinkList){
+
+      applicationName = "FinServ";
+      nativeIdentity = accountLink.getNativeIdentity();
+
+      if(null != applicationName &amp;&amp; null != nativeIdentity){
+        if(AUTH_APP.equalsIgnoreCase(applicationName)){
+
+          // No Deprovisioning required for HR Authoritative Source
+
+        }else{
+
+
+          accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Disable , applicationName , null , nativeIdentity);
+          accountRequestList.add( accountRequest );
+
+
+        }
+
+
+        if (identity.getAttribute("city").equals("Michigan") &amp;&amp; applicationName.equals("FinServ")){
+
+          accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Modify , applicationName , null , nativeIdentity );
+
+          attributeRequest = new AttributeRequest("ACCESSTYPE", ProvisioningPlan.Operation.Remove, "Support"); 
+
+          attributeRequestList.add( attributeRequest );
+
+          accountRequest.setAttributeRequests( attributeRequestList ) ;
+
+          accountRequestList.add( accountRequest );
+
+        }
+
+      }	
+    }
+  }
+  newPlan.setNativeIdentity( identityName ) ;
+  newPlan.setAccountRequests( accountRequestList );
+  Provisioner prov = new Provisioner(context);
+ return  prov.compile(newPlan);
+
+  </Source>
+</Rule>

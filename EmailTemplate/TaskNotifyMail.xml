@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE EmailTemplate PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<EmailTemplate name="TaskNotifyMail">
+  <Body> $contactName
+		
+			The task result requires your attention.
+			
+			Information:
+			
+			$message
+			
+			$comment
+
+			The Identropy Team
+		</Body>
+  <Description>
+			Email Template for notifying a user when they have a work item.
+		</Description>
+  <Signature>
+    <Inputs>
+      <Argument name="message" type="string">
+        <Description>The alert message.</Description>
+      </Argument>
+      <Argument name="comment" type="string">
+        <Description>The alert comment.</Description>
+      </Argument>
+      <Argument name="contactName" type="string">
+        <Description>Contact responsible for receiving notifications.</Description>
+      </Argument>
+      <Argument name="contactMail" type="string">
+        <Description>Mail address to where notifications will be sent.</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>[TaskNotify] $message</Subject>
+</EmailTemplate>

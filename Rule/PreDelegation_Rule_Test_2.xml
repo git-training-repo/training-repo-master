@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="PreDelegation Rule Test 2" type="CertificationPreDelegation">
+  <Description>A pre-delegation rule that is run on every CertificationEntity when the certification is generated in order to cause some entities to be pre-delegated. This rule checks for self-certification and in case it is encountered re-assigns the line item to the certifiers' manager(if present) 
+or the Admin Workgroup</Description>
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="LLY Rule Library"/>
+  </ReferencedRules>
+  <Signature returnType="Map">
+    <Inputs>
+      <Argument name="log">
+        <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+      </Argument>
+      <Argument name="context">
+        <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+      </Argument>
+      <Argument name="certification">
+        <Description>
+          The sailpoint.object.Certification being created.
+        </Description>
+      </Argument>
+      <Argument name="entity">
+        <Description>
+          The sailpoint.object.CertificationEntity to possibly pre-delegate.
+        </Description>
+      </Argument>
+      <Argument name="certContext">
+        <Description>
+          The sailpoint.api.CertificationContext generating this certification.
+        </Description>
+      </Argument>
+      <Argument name="state">
+        <Description>
+          A Map containing state information.
+        </Description>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="recipientName">
+        <Description>
+        The name of the Identity that should certify this entity.  Either
+        this or 'recipient' should be non-null if pre-delegation should be
+        performed.
+        </Description>
+      </Argument>
+      <Argument name="recipient">
+        <Description>
+        The Identity that should certify this entity.  Either this or
+        'recipientName' should be non-null if pre-delegation should be
+        performed.
+        </Description>
+      </Argument>
+      <Argument name="description">
+        <Description>
+        Optional description to set on the delegation WorkItem.  If null, a
+        default description of 'Certify [entity name]' is used.
+        </Description>
+      </Argument>
+      <Argument name="comments">
+        <Description>
+        Optional comments to set on the delegation WorkItems.
+        </Description>
+      </Argument>
+      <Argument name="reassign">
+        <Description>
+        Optional boolean to specify to reassign rather than delegate.
+        </Description>
+      </Argument>
+      <Argument name="certificationName">
+        <Description>
+        Optional String to specify the name for the reassignment certification
+        if creating a new certification for reassignment.  This is ignored for
+        delegations.
+        </Description>
+      </Argument>
+    </Returns>
+  </Signature>
+  <Source>import sailpoint.object.Identity;
+	import sailpoint.object.CertificationItem;
+	import sailpoint.object.Filter;
+	
+	import sailpoint.tools.Message;
+	
+	import java.util.List;
+	import java.util.ArrayList;
+	import java.util.HashMap;
+	import java.util.Map;
+	import java.util.Iterator;
+	
+	import org.apache.commons.logging.Log;
+	import org.apache.commons.logging.LogFactory;
+
+	Map results = new HashMap();
+	Map applicationCache = new HashMap();
+	List certList = new ArrayList();
+	List items;
+	CertificationItem itemObject;
+	Identity certOwner;
+//	Identity certMgr;
+	Identity reAssignee;
+	String reAssigneeName;
+	Object[] args;
+	
+	
+	//Get the admin work group name from the system configuration
+//	String ADMIN_WORKGROUP = context.getConfiguration().getString("llymyAccessAdminWorkgroupName");
+	
+	//invoke method getLocalizedDescription in LLY Rule Library to get the localized description.First argument is message key
+//	String description = Message.info("lly_eo_predelegation_description",args).getLocalizedMessage();	
+//	String comments = Message.info("lly_eo_predelegation_comments",args).getLocalizedMessage();
+//	log = LogFactory.getLog("com.lilly.iag.rule.certification.LLYEntitlementOwnerPreDelegationRule");
+
+	try{		
+		items = entity.getItems();
+		if(items == null &amp;&amp; !items.isEmpty()){
+			
+			log.info("No items found to certify in the pre-delegation rule");
+			return;
+			
+		}
+		
+		if (log.isDebugEnabled()){
+		
+			log.debug("Certification Item List:" + items);
+			log.debug("No of entitlements in certification item: " + items.size());
+			
+		}
+		
+		//retrieving certification Owner by invoking context.getObjectByName because bulkReassign takes identity as an input
+		certOwner = context.getObjectByName(Identity.class,certification.getCertifiers().get(0));
+//		certMgr = certOwner.getManager();
+		
+	if (log.isDebugEnabled()){
+				
+					log.debug("Certification line item: " + entity.getFullname());
+					log.debug("Current line item owner: " + certOwner.getName());
+				
+		}
+		
+//		reAssigneeName = ADMIN_WORKGROUP;
+
+		//Condition to check if the certifier's supervisor is not null and supervisor does not belong to executive group, re-assign to certifier's supervisor
+/*		if(certMgr != null &amp;&amp; !"true".equals(certMgr.getAttribute("llyExecutiveGroup")) ){
+						
+			reAssigneeName = certMgr.getName();
+						
+		}*/
+				
+	/*	// Loop to iterate through all line items to identify self-certification items
+		for (Iterator it = items.iterator(); it.hasNext();) {
+			
+				itemObject = (CertificationItem)it.next();
+				
+				//update target displayName on the certification item so that identity display name is available for audit
+				Object[] propertiesArray = getObjectPropertiesArray(Identity.class, Filter.eq("name", itemObject.getIdentity()), Arrays.asList(new String[] {"displayName"}));
+				itemObject.setTargetDisplayName(propertiesArray[0]);
+				
+				//update the entitlement display name on the attributes clob for audit
+				updateEntitlementDisplayName(itemObject, applicationCache);
+		
+				//Condition to check for self-certification
+				if(itemObject.getIdentity().equals(certOwner.getName())){
+										
+					certList.add(itemObject);
+					
+				}
+				
+		}
+			
+		//Condition to check if there are any self certification items in the list certList
+		if(certList != null &amp;&amp; certList.size() != 0){
+			
+			if (log.isDebugEnabled()){
+						
+						log.debug("This is a case of self-certification, line item will be reassigned to: " + reAssigneeName);
+							
+			}
+			reAssignee = context.getObjectByName(Identity.class,reAssigneeName);
+			certification.bulkReassign(certOwner,certList,reAssignee,description,comments,context.getConfiguration());
+		}*/
+		
+		for (Iterator it = items.iterator(); it.hasNext();) {
+		
+		itemObject = (CertificationItem)it.next();
+			
+				certList.add(itemObject);	
+				
+		}
+		
+		reAssignee = context.getObjectByName(Identity.class,"a100014");
+			certification.bulkReassign(certOwner,certList,reAssignee,"description","comments",context.getConfiguration());
+		
+	
+		
+		
+		
+		
+		
+			
+		return results;
+		
+	}catch(Exception exception){
+	
+		log.error("Exception in Entitlement owner pre-delegation  rule: ",exception);
+		
+		
+	}</Source>
+</Rule>

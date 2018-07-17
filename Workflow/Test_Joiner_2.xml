@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow libraries="Identity" name="Test Joiner 2" type="IdentityLifecycle">
+  <Variable input="true" name="trigger">
+    <Description>The IdentityTrigger</Description>
+  </Variable>
+  <Variable input="true" name="event" transient="true">
+    <Description>
+      The IdentityChangeEvent.  It can be used to build
+      the provisioning plan, but does not need to be
+      persisted with the case, so marked as transient.
+    </Description>
+  </Variable>
+  <Variable input="true" name="trace"/>
+  <Variable input="true" name="identityName">
+    <Description>The name of the identity.</Description>
+  </Variable>
+  <Variable name="plan">
+    <Description>Plan.</Description>
+  </Variable>
+  <Description>Process a new employee.</Description>
+  <RuleLibraries>
+    <Reference class="sailpoint.object.Rule" name="Test Rule Lib"/>
+  </RuleLibraries>
+  <Step icon="Start" name="Start" posX="28" posY="10">
+    <Script>
+      <Source>
+      System.out.println("entered the workflow");
+      </Source>
+    </Script>
+    <Transition to="Build Provisioning Plan"/>
+  </Step>
+  <Step name="Build Provisioning Plan" posX="148" posY="10">
+    <Description>Process the user that joined.</Description>
+    <Script>
+      <Source>
+        import sailpoint.object.ProvisioningPlan;
+    //  System.out.println("New user entered the system: " + event.getObject().getDisplayableName());
+      ProvisioningPlan newPlan = buildBirthRightProvisioningPlan(identityName);
+        System.out.println("plan is: "+newPlan);
+        workflow.put("plan", newPlan);
+      System.out.println("exiting build plan step");
+      </Source>
+    </Script>
+    <Transition to="Provision"/>
+  </Step>
+  <Step name="Provision" posX="28" posY="10" wait="1">
+    <Arg name="plan" value="ref:plan"/>
+    <Arg name="approvalScheme" value="none"/>
+    <Arg name="identityName" value="ref:identityName"/>
+    <Script>
+      <Source>
+      System.out.println("provisioning step");
+      </Source>
+    </Script>
+    <WorkflowRef>
+      <Reference class="sailpoint.object.Workflow" name="LCM Provisioning"/>
+    </WorkflowRef>
+    <Transition to="Stop"/>
+  </Step>
+  <Step icon="Stop" name="Stop" posX="268" posY="10"/>
+</Workflow>

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Test Rule Lib">
+  <Description>Allows all objects to be selected (no filtering)</Description>
+  <Source>
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
+import sailpoint.api.IdentityService;
+  
+import sailpoint.tools.Util;
+
+import sailpoint.connector.Connector;
+import sailpoint.connector.ConnectorFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import sailpoint.object.*;
+import sailpoint.api.IdentityService;
+  
+import sailpoint.tools.Util;
+
+import sailpoint.connector.Connector;
+import sailpoint.connector.ConnectorFactory;
+
+import java.lang.Object;
+
+import sailpoint.api.Aggregator;
+import sailpoint.object.TaskResult;						   
+						   
+	
+import java.lang.Object;
+
+
+/**
+* Sends custom email to recipients specified in parameter. Body of email depends upon the email template and arguments specified
+* 
+ * @param recipient
+*            Email address of Recipient
+* @param ccRecipient
+*            Email address of Recipients to be CCed
+* @param emailTemplateName
+*            Name of the Email Template
+* @param emailTemplateArguments
+*            Arguments to be passed to email template
+*
+* @return true if email sent successfully.
+*/
+
+
+boolean sendEmail(String recipient, String ccRecipient, String emailTemplateName, Map emailTemplateArguments) {
+
+boolean returnValue = true;
+
+try {
+
+	EmailOptions emailOptions;
+	EmailTemplate testTemplate;
+
+	testTemplate = context.getObjectByName(EmailTemplate.class, emailTemplateName);
+	emailOptions = new EmailOptions(recipient, emailTemplateArguments);
+
+	if(!StringUtils.isBlank(ccRecipient))
+		emailOptions.setCc(ccRecipient); 
+
+	context.sendEmailNotification(testTemplate, emailOptions);
+
+}catch (Exception exception) { 
+
+	returnValue = false;
+}
+return returnValue;
+}
+  
+  
+public generatePassword (String identityName){
+	Identity identity = context.getObjectByName(Identity.class,identityName);
+	String department = identity.getAttribute("department");
+	String employeeId = identity.getAttribute("employeeId");
+	String password = employeeId + department;
+	return password;
+	}  
+  
+public buildBirthRightProvisioningPlan (String identityName ) {
+
+	ProvisioningPlan plan = new ProvisioningPlan();
+	List accountRequestList = new ArrayList();
+	List attributeRequestList = new ArrayList();
+
+	AccountRequest accountRequest = null;
+	AttributeRequest attributeRequest = null;
+	String password = generatePassword(identityName);
+
+	plan.setNativeIdentity( identityName ) ;
+
+	//List of application accounts to be provisioned as part of birthright
+	List applicationList = new ArrayList( Arrays.asList( "Active Directory") ) ;
+
+	for( String applicationName : applicationList ) {
+
+		accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Create , applicationName , null , identityName );
+				
+		attributeRequest = new AttributeRequest ("password", ProvisioningPlan.Operation.Add ,password);
+		
+		Attributes attributesMap = new Attributes();
+		  Map map = new HashMap();
+		  map.put("secret","true");
+		  attributesMap.setMap(map);
+		  attributeRequest.setArgs(attributesMap);
+		  
+		  accountRequest.add(attributeRequest);
+			accountRequestList.add( accountRequest );
+    
+	}
+	plan.setAccountRequests( accountRequestList );
+	System.out.println(plan);
+	return plan;
+}
+  
+  
+public ProvisioningPlan newOUProvisioningPlan(String identityName){
+  log.error("Enter updateOUForActiveDirectory method" );
+
+  ProvisioningPlan plan = new ProvisioningPlan();
+      AccountRequest accountRequest = null;
+  List accountRequestList = new ArrayList();
+  List attributeRequestList = new ArrayList();
+  
+    String APPLICATION_NAME = "FinServ";
+    String AC_NEW_PARENT = "REGION";
+//  plan.setNativeIdentity( identityName ) ;
+
+      accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Modify , APPLICATION_NAME , null , identityName );
+
+      AttributeRequest attributeRequest = new AttributeRequest(  AC_NEW_PARENT , ProvisioningPlan.Operation.Set, "REGION" );
+  
+      attributeRequestList.add( attributeRequest );
+  
+      accountRequest.setAttributeRequests( attributeRequestList ) ;
+	  accountRequestList.add( accountRequest );
+  System.out.println(accountRequestList);
+   plan.setAccountRequests( accountRequestList );
+    log.error( "Exit updateOUForActiveDirectory method" );
+    return plan;
+  }
+  
+  
+  
+  public singleAccountAggregation(String applicationName, String accountName){
+Application app = context.getObject(Application.class, applicationName);
+Connector connector = ConnectorFactory.getConnector(app, null);
+
+ResourceObject resourceObject =  connector.getObject("account", accountName, null);
+
+//Set required variables for Account aggregation
+Attributes argMap = new Attributes();  
+argMap.put("noAutoCreateApplications", "true");  
+argMap.put("noAutoCreateScopes", "true");  
+argMap.put("processTriggers", "false");  
+argMap.put("promoteManagedAttributes", "true");  
+argMap.put("refreshIdentity", "false");  
+
+Aggregator agg = new Aggregator(context, argMap);
+TaskResult taskResult = agg.aggregate(app, resourceObject);  
+
+context.commitTransaction();  
+context.decache();
+}
+
+</Source>
+</Rule>

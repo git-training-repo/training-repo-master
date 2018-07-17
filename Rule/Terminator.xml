@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Terminator">
+  <Source>
+                                import sailpoint.api.Terminator;  
+                                import sailpoint.object.Application; 
+                               import sailpoint.object.Filter;
+  import sailpoint.object.Filter.LeafFilter;
+                               //import sailpoint.object.CertificationGroup;
+                               import sailpoint.object.QueryOptions;
+  import sailpoint.object.ManagedAttribute;
+try
+    {
+ //Application app = ManagedAttribute.getApplication();
+  
+// if(app.getName().equals("ICAN")){
+  
+ // System.out.println("application is :  " + ManagedAttribute.ApplicationRef );
+   Filter searchFilter = Filter.and(new Filter[] {Filter.like("ManagedAttribute.value","CSR"),Filter.ignoreCase(Filter.eq("application.name","ICAN"))} ); 
+     //new Filter [] (Filter.ignoreCase(Filter.eq("application.name","ICAN")),Filter.like("ManagedAttribute.value","CSR")));
+
+                                QueryOptions qo = new QueryOptions();
+                                qo.addFilter(searchFilter);
+                                  
+                                Terminator terminateActive = new Terminator(context);  
+                                
+                                terminateActive.deleteObjects(ManagedAttribute.class,qo);
+  //  } 
+                                }              catch (GeneralException ge)
+    {
+    ge.printStackTrace();
+    }               </Source>
+</Rule>

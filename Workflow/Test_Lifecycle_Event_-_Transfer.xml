@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow libraries="Identity,IdentityRequest" name="Test Lifecycle Event - Transfer" type="IdentityLifecycle">
+  <Variable input="true" name="trigger">
+    <Description>The IdentityTrigger</Description>
+  </Variable>
+  <Variable input="true" name="event" transient="true" type="sailpoint.object.IdentityChangeEvent">
+    <Description>
+      The IdentityChangeEvent. It can be used to build
+      the
+      provisioning plan, but does not need to be
+      persisted with the case,
+      so marked as transient.
+    </Description>
+  </Variable>
+  <Variable input="true" name="identityName">
+    <Description>The name of the identity.</Description>
+  </Variable>
+  <Variable initializer="script:(identityDisplayName != void) ? identityDisplayName : resolveDisplayName(identityName)" input="true" name="identityDisplayName">
+    <Description>
+      The displayName of the identity being updated.
+      Query for
+      this using a projection query and fall back to the name.
+    </Description>
+  </Variable>
+  <Variable name="plan">
+    <Description>The provisioning plan, which is built by a service method.</Description>
+  </Variable>
+  <Variable initializer="string:false" name="optimisticProvisioning">
+    <Description>
+      Set to true to enable optimistic provisioning. This
+      will cause
+      changes to the entitlements compiled from role
+      assignments to be
+      applied immediately to the identity cube rather than waiting
+      for the next
+      refresh/reaggregation after the provisioning system
+      completes the
+      request.
+    </Description>
+  </Variable>
+  <Variable initializer="string:true" name="foregroundProvisioning">
+    <Description>
+      Normally provisioning is done in a step that uses the
+      "background"
+      option to force the workflow to be suspend and be
+      resumed in a
+      background task thread. This prevents the browser
+      session from
+      hanging since provision can sometimes take a long
+      time. For demos
+      and testing it can be better to do this in the
+      foreground so that
+      provisioning will have been performed when
+      control is returned to the
+      user. This prevents having to run the
+      Perform Maintenance task to
+      see the resutls of the request.
+    </Description>
+  </Variable>
+  <Variable initializer="string:spadmin" input="true" name="fallbackApprover">
+    <Description>
+      A String that specifies the name of the Identity that
+      will
+      be assigned any approvals where the owner of the approver
+      can't be resolved. Example if the scheme is "owner" and the
+      application doesn't specify and owner.
+    </Description>
+  </Variable>
+  <Variable initializer="string:LCM" input="true" name="source">
+    <Description>
+      String version of sailpoint.object.Source to indicate
+      where the request originated. Defaults to LCM.
+    </Description>
+  </Variable>
+  <Variable initializer="true" input="true" name="trace">
+    <Description>
+      Used for debugging this workflow and when set to true
+      trace
+      will be sent to stdout.
+    </Description>
+  </Variable>
+  <Variable name="project">
+    <Description>
+      ProvisioningProject which is just a compiled version of
+      the ProvisioningPlan.
+    </Description>
+  </Variable>
+  <Variable name="accounts"/>
+  <Variable name="identityRequestId" output="true">
+    <Description>
+      The sequence id of the Identity request object which is stored in
+      the name field of the identity request.
+    </Description>
+  </Variable>
+  <Description>Joiner workflow. Enable Birthright roles when an employee
+    joins the company.</Description>
+  <RuleLibraries>
+    <Reference class="sailpoint.object.Rule" name="Test Rule Lib"/>
+  </RuleLibraries>
+  <Step icon="Start" name="Start" posX="10" posY="20">
+    <Description>Initiate the workflow</Description>
+    <Script>
+      <Source>
+		log.error("entering the transfre workflow");
+      </Source>
+    </Script>
+    <Transition to="Move OU"/>
+  </Step>
+  <Step name="Move OU">
+    <Description>Change OU and provision it</Description>
+    <Script>
+      <Source>
+		import sailpoint.object.ProvisioningPlan;
+		log.error("Step 1 : User's OU change");
+		Identity id = context.getObjectByName(Identity.class,identityName);
+		String nativeIdentity;
+		List links = id.getLinks();
+		for(Link ADlink : links){
+			if (ADlink.getApplicationName().equals("FinServ")){
+				nativeIdentity = ADlink.getNativeIdentity();
+			}
+		}
+		ProvisioningPlan newPlan = newOUProvisioningPlan(nativeIdentity);
+		workflow.put("plan", newPlan);
+    System.out.println("plan"+plan);   
+		log.error("Provision new OU");
+	  </Source>
+    </Script>
+    <Transition to="Provision"/>
+  </Step>
+  <Step name="Provision" posX="28" posY="10" wait="1">
+    <Arg name="plan" value="ref:plan"/>
+    <Arg name="approvalScheme" value="none"/>
+    <Arg name="identityName" value="ref:identityName"/>
+    <Arg name="correlateEntitlements" value="false"/>
+    <Script>
+      <Source>
+      System.out.println("provisioning step");
+      </Source>
+    </Script>
+    <WorkflowRef>
+      <Reference class="sailpoint.object.Workflow" name="LCM Provisioning"/>
+    </WorkflowRef>
+    <Transition to="Single Account Aggregation"/>
+  </Step>
+  <Step name="Single Account Aggregation" posX="28" posY="10">
+    <Description>Single Account Aggregation</Description>
+    <Script>
+      <Source>
+		import sailpoint.object.*;
+		Identity id = context.getObjectByName(Identity.class,identityName);
+		String attributeValue;	
+		List appName = plan.getApplicationNames();
+		List links = id.getLinks();
+		for(Link ADlink : links){
+			if (ADlink.getApplicationName().equals("FinServ")){
+				attributeValue = ADlink.getAttribute("FINSERVID");
+			}
+		}
+		singleAccountAggregation(appName.get(0),attributeValue);
+		log.error("Account Aggregated");  
+	  </Source>
+    </Script>
+    <Transition to="Refresh Roles"/>
+  </Step>
+  <Step action="call:refreshIdentity" icon="Task" name="Refresh Roles" posX="1028" posY="7">
+    <Arg name="identityName" value="ref:identityName"/>
+    <Arg name="correlateEntitlements" value="true"/>
+    <Arg name="provision" value="true"/>
+    <Description>
+		Call identity Refresh to refresh assigned role
+    </Description>
+    <Transition to="Launch certification"/>
+  </Step>
+  <Step name="Launch certification" posX="28" posY="10">
+    <Description>Launch certification</Description>
+    <Script>
+      <Source>
+
+
+	import java.util.List;
+	import java.util.ArrayList;
+	import sailpoint.api.CertificationScheduler;
+	import sailpoint.object.CertificationSchedule;
+	import sailpoint.object.CertificationDefinition;
+	import sailpoint.object.TaskSchedule;
+	import sailpoint.object.Certification;
+	import sailpoint.task.CertificationExecutor.CertifierSelectionType;
+	import sailpoint.tools.Util;
+	import sailpoint.tools.xml.XMLObjectFactory;
+	import sailpoint.tools.xml.XMLReferenceResolver;
+	import org.apache.commons.logging.Log;
+	import org.apache.commons.logging.LogFactory;
+
+	log.error("Start executing Certification Rule");
+	
+	String certificationName = "Test Certification Event";
+	Identity requestor = context.getObjectByName(Identity.class, launcher);
+	
+String certificationDefinitionTemplateName = "Test Event Certification Template";
+	String launcher = "spadmin";
+	String fallbackCertifier = "spadmin";
+	
+	// Certification Group Owner
+	Identity certGroupOwner = context.getObjectByName(Identity.class, fallbackCertifier);
+        
+		Identity id = context.getObjectByName(Identity.class,identityName);
+			Identity manager = id.getManager();
+			String certifier = manager.getName();
+
+	// Schedule Certification
+
+	// Create new Scheduler object
+
+	CertificationScheduler scheduler = new CertificationScheduler(context);
+
+	// Create schedule and set to run now
+
+	CertificationSchedule schedule = scheduler.initializeScheduleBean(requestor, Certification.Type.Identity);
+	schedule.setRunNow(true);
+
+	// Configure Certification Definition
+	
+	CertificationDefinition definitionTemplate = context.getObjectByName(CertificationDefinition.class ,certificationDefinitionTemplateName);
+	
+	if(definitionTemplate == null){
+		log.error("Job Change certification template not found in system" + certificationDefinitionTemplateName);
+		return;
+	}
+	CertificationDefinition definition = (CertificationDefinition) XMLObjectFactory.getInstance().cloneWithoutId(definitionTemplate,(XMLReferenceResolver)context);
+
+	schedule.setDefinition(definition);
+	definition.setCertifierSelectionType(CertificationDefinition.CertifierSelectionType.Manual);
+	definition.setNameTemplate(certificationName);
+	definition.setShortNameTemplate(certificationName);
+	definition.setName(certificationName);
+	definition.setIdentitiesToCertify(Util.asList(identityName));
+	definition.setCertifierName(certifier);
+	definition.setCertificationOwner(certGroupOwner);
+	definition.setCertificationNameTemplate(certificationName);
+
+	// Schedule task to run, passing in schedule (which has certification defintion attached)
+
+	TaskSchedule taskSchedule = scheduler.saveSchedule(schedule, false);
+	log.info("End executing Certification Rule");
+</Source>
+    </Script>
+    <Transition to="Send Email"/>
+  </Step>
+  <Step name="Send Email" posX="28" posY="10">
+    <Script>
+      <Source>    
+		import sailpoint.object.*;  
+		import sailpoint.api.SailPointContext;
+		import java.util.*; 
+		import java.util.HashMap;
+
+		Identity identity = context.getObjectByName(Identity.class,identityName);
+		String emailTemplate = "Test Leaver Email";
+
+		Identity recipientIdentity = identity.getManager();
+		String recipient = recipientIdentity.getAttribute("email");
+
+		Map args = new HashMap();
+		args.put("employeeID",identity.getAttribute("employeeId"));
+		args.put("identityName",identityName);
+		args.put("manager",recipientIdentity);
+		
+		sendEmail(recipient,null,emailTemplate,args);
+	  </Source>
+    </Script>
+    <Transition to="Stop"/>
+  </Step>
+  <Step icon="Stop" name="Stop" posX="526" posY="170"/>
+</Workflow>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition hidden="true" name="Automated Provisioning Transaction Object Report for spadmin" resultAction="RenameNew" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="disableDetail">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="disableSummary">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="reportColumnOrder" value="created,name,operation,source,applicationName,identityName,nativeIdentity,accountDisplayName,integration,type,status"/>
+      <entry key="reportSortAsc">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="reportSortBy" value="created"/>
+    </Map>
+  </Attributes>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="Provisioning Transaction Object Report"/>
+  </Parent>
+  <RequiredRights>
+    <Reference class="sailpoint.object.SPRight" name="FullAccessProvisioningTransactionReport"/>
+  </RequiredRights>
+</TaskDefinition>

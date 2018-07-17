@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow explicitTransitions="true" name="TaskNotifyWorkflow" type="">
+  <Variable initializer="string:false" input="true" name="trace"/>
+  <Variable initializer="string:false" input="true" name="transient"/>
+  <Variable input="true" name="message"/>
+  <Variable input="true" name="comment"/>
+  <Variable input="true" name="contactName"/>
+  <Variable input="true" name="contactMail"/>
+  <Step icon="Start" name="Start">
+    <Transition to="Incident"/>
+  </Step>
+  <Step action="call:sendEmail" icon="Email" name="Incident">
+    <Arg name="message" value="ref:message"/>
+    <Arg name="comment" value="ref:comment"/>
+    <Arg name="contactName" value="ref:contactName"/>
+    <Arg name="template" value="TaskNotifyMail"/>
+    <Arg name="to" value="ref:contactMail"/>
+    <Arg name="from" value="admin@identityIQ.com"/>
+    <Transition to="Stop"/>
+  </Step>
+  <Step icon="Stop" name="Stop" posX="323" posY="21"/>
+</Workflow>
