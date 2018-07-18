@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Bundle PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Bundle disabled="true" name="BFR.Manager-WFM" type="business">
+  <Inheritance>
+    <Reference class="sailpoint.object.Bundle" name="ICAN"/>
+  </Inheritance>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Selector>
+    <IdentitySelector>
+      <MatchExpression and="true">
+        <MatchTerm name="ROLE" value="Manager-WFM&#xd;"/>
+      </MatchExpression>
+      <Summary>Identity attribute assignment rule : [Manager-WFM
+]</Summary>
+    </IdentitySelector>
+  </Selector>
+</Bundle>

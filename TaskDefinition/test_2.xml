@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="test 2" resultAction="Rename" subType="Identity and User Reports" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="application" value="FinServ"/>
+      <entry key="disableDetail" value="false"/>
+      <entry key="disableSummary" value="false"/>
+      <entry key="reportColumnOrder" value="identityManager, FinServ_Test, nativeIdentity"/>
+    </Map>
+  </Attributes>
+  <Description>Displays all attributes for a given account on each application</Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="User Account Attributes Report"/>
+  </Parent>
+</TaskDefinition>

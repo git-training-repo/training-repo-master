@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Escalation Email rule" type="Escalation">
+  <Description>Escalation rules are used by the Escalator to figure out where to route notifiable items (work items or certification items) that have expired.
+
+Escalation rules return a string which specifies the name of the identity that should receive the escalated item.</Description>
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="WAM Rule Library"/>
+  </ReferencedRules>
+  <Signature returnType="String">
+    <Inputs>
+      <Argument name="log">
+        <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+      </Argument>
+      <Argument name="context">
+        <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+      </Argument>
+      <Argument name="item">
+        <Description>
+          The sailpoint.object.Notifiable to escalate.
+        </Description>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="newOwner">
+        <Description>
+          The name of the Identity object that should be the new owner of
+          the notifiable.
+        </Description>
+      </Argument>
+    </Returns>
+  </Signature>
+  <Source>import sailpoint.object.Identity;
+  import sailpoint.object.EmailOptions;
+  import sailpoint.object.EmailTemplate;
+import sailpoint.object.Filter;
+  import sailpoint.object.FilterLeaf;
+import java.util.Iterator;
+import java.util.List;
+import java.util.HashMap;
+  import java.util.Map;
+import sailpoint.tools.Util;
+
+// Identity wamCurrentOwner = item.getNotificationOwner(context); 
+  Identity wamCurrentOwner = context.getObjectByName(Identity.class,"a100001");
+Identity wamNewOwner;
+                System.out.println("owner" + wamCurrentOwner);
+
+  if (wamCurrentOwner != null) {
+    wamNewOwner = wamCurrentOwner.getManager(); 
+}
+
+              
+
+String to,cc;
+
+Map objectPropertiesMap1 = getObjectProperties(Identity.class, Filter.eq("name", wamCurrentOwner.getName()), Util.csvToList("email"));
+cc = objectPropertiesMap1.get("email");
+
+System.out.println("manager email" + cc);
+
+Map objectPropertiesMap2 = getObjectProperties(Identity.class, Filter.eq("name", wamNewOwner.getName()), Util.csvToList("email"));
+to =  objectPropertiesMap2.get("email");
+
+System.out.println("certifier email" + to);
+  
+  
+Map mailargs  = new HashMap();
+       mailargs.put("identity" , "spadmin");
+       EmailTemplate template = context.getObjectByName(EmailTemplate.class, "Access Request Reminder");
+       EmailOptions options = new EmailOptions();
+  options.setTo(to); 
+  options.setCc(cc); 
+  
+  context.sendEmailNotification(template, options);
+  		
+
+return wamCurrentOwner; 
+</Source>
+</Rule>

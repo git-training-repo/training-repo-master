@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.reporting.LiveReportExecutor" name="Impersonation Audit Report" progressMode="Percentage" resultAction="Rename" subType="Audit Reports" template="true" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="report">
+        <value>
+          <LiveReport title="Impersonation Audit Report">
+            <DataSource objectType="AuditEvent" type="Filter">
+              <OptionsScript>
+                <Source>
+import sailpoint.object.Filter;
+import sailpoint.object.Identity;
+import sailpoint.tools.Util;
+
+List types = new ArrayList();
+types.add("impersonate");
+types.add("impersonateTrail");
+types.add("unimpersonate");
+types.add("impersonationError");
+options.add(Filter.in("action", types));
+                  
+                  
+List impersonatorIds = args.get("impersonators");
+if (impersonatorIds != null) {
+  List impersonatorNames = new ArrayList();
+  for (String id: impersonatorIds) {
+    Identity impersonator = context.getObjectById(Identity.class, id);
+    if (impersonator != null) {
+      impersonatorNames.add(impersonator.getName());
+    }
+  }
+  options.add(Filter.in("source", impersonatorNames));
+}
+
+List targetIds = args.get("targets");
+if (targetIds != null) {
+  List targetNames = new ArrayList();
+  for (String id: targetIds) {
+    Identity target = context.getObjectById(Identity.class, id);
+    if (target != null) {
+      targetNames.add(target.getName());
+    }
+  }
+  options.add(Filter.in("target", targetNames));
+}
+
+Date startDate = args.get("startDate");
+Date endDate = args.get("endDate");
+if (startDate != null) {
+  options.addFilter(Filter.ge("created", Util.getBeginningOfDay(startDate)));
+}
+if (endDate != null) {
+  options.addFilter(Filter.le("created", Util.getEndOfDay(endDate)));
+}
+
+
+return options;
+  </Source>
+              </OptionsScript>
+            </DataSource>
+            <Columns>
+              <ReportColumnConfig field="date" header="Timestamp" property="created" sortable="true" width="110"/>
+              <ReportColumnConfig field="action" header="Event type" property="action" sortable="true" width="110"/>
+              <ReportColumnConfig field="impersonator" header="Impersonator" property="source" sortable="true" width="110"/>
+              <ReportColumnConfig field="target" header="Target Identity" property="target" sortable="true" width="110"/>
+              <ReportColumnConfig field="url" header="Pages Visited" property="attributeValue" sortable="true" width="110"/>
+              <ReportColumnConfig field="sessionId" header="Session ID" hidden="true" property="string4" sortable="true" width="110"/>
+            </Columns>
+          </LiveReport>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <Description>Audit trail of impersonation actions.</Description>
+  <Signature>
+    <Inputs>
+      <Argument name="startDate" type="date">
+        <Description>Search for events on or after the selected date</Description>
+      </Argument>
+      <Argument name="endDate" type="date">
+        <Description>Search for events on or before the selected date</Description>
+      </Argument>
+      <Argument filterString="workgroup == false" multi="true" name="impersonators" type="Identity">
+        <Description>Select on or more identities as impersonators to be
+						searched for</Description>
+      </Argument>
+      <Argument filterString="workgroup == false" multi="true" name="targets" type="Identity">
+        <Description>Select on or more identities as impersonation targets
+						to be searched for</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+</TaskDefinition>

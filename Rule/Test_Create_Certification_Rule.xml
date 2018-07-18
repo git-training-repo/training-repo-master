@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Test Create Certification Rule">
+  <Description>Allows all objects to be selected (no filtering)</Description>
+  <Signature returnType="void">
+    <Inputs>
+      <Argument name="certificationDefinitionTemplateName" type="String">
+        <Description>
+          Name of certification definition template used to launch the certification
+        </Description>
+      </Argument>
+      <Argument name="context">
+        <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+      </Argument>
+      <Argument name="certificationModel" type="String">
+        <Description>
+          Certification model name. This is either supervisor or entitlement owner.
+        </Description>
+      </Argument>
+      <Argument name="certifier" type="String">
+        <Description>
+          Certifier responsible for certifying certification.
+        </Description>
+      </Argument>
+      <Argument name="launcher" type="String">
+        <Description>
+          Name of the identity that launched the event. This is a default input argument to the workflow.
+        </Description>
+      </Argument>
+      <Argument name="fallbackCertifier" type="String">
+        <Description>
+          Name of the fallback certifier to whom workitem is assigned if no owner is found
+        </Description>
+      </Argument>
+      <Argument name="certificationNameKey" type="String">
+        <Description>
+          Message catalog key associated with certification name
+        </Description>
+      </Argument>
+      <Argument name="identityDisplayName" type="String">
+        <Description>
+          Display name of the identity who is being certified due to job change.
+        </Description>
+      </Argument>
+      <Argument name="identityName" type="String">
+        <Description>
+          The name of the identity who is being certified due to job change.
+        </Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Source>
+
+
+	import java.util.List;
+	import java.util.ArrayList;
+	import sailpoint.api.CertificationScheduler;
+	import sailpoint.object.CertificationSchedule;
+	import sailpoint.object.CertificationDefinition;
+	import sailpoint.object.TaskSchedule;
+	import sailpoint.object.Certification;
+	import sailpoint.task.CertificationExecutor.CertifierSelectionType;
+	import sailpoint.tools.Util;
+	import sailpoint.tools.xml.XMLObjectFactory;
+	import sailpoint.tools.xml.XMLReferenceResolver;
+	import org.apache.commons.logging.Log;
+	import org.apache.commons.logging.LogFactory;
+
+	log.error("Start executing Certification Rule");
+	
+	String certificationName = "Test Certification Event";
+	Identity requestor = context.getObjectByName(Identity.class, launcher);
+	
+	// Certification Group Owner
+	Identity certGroupOwner = context.getObjectByName(Identity.class, fallbackCertifier);
+        
+		Identity id = context.getObjectByName(Identity.class,identityName);
+			Identity manager = id.getManager();
+			String certifier = manager.getName();
+
+	// Schedule Certification
+
+	// Create new Scheduler object
+
+	CertificationScheduler scheduler = new CertificationScheduler(context);
+
+	// Create schedule and set to run now
+
+	CertificationSchedule schedule = scheduler.initializeScheduleBean(requestor, Certification.Type.Identity);
+	schedule.setRunNow(true);
+
+	// Configure Certification Definition
+	
+	CertificationDefinition definitionTemplate = context.getObjectByName(CertificationDefinition.class ,certificationDefinitionTemplateName);
+	
+	if(definitionTemplate == null){
+		log.error("Job Change certification template not found in system" + certificationDefinitionTemplateName);
+		return;
+	}
+	CertificationDefinition definition = (CertificationDefinition) XMLObjectFactory.getInstance().cloneWithoutId(definitionTemplate,(XMLReferenceResolver)context);
+
+	schedule.setDefinition(definition);
+	definition.setCertifierSelectionType(CertificationDefinition.CertifierSelectionType.Manual);
+	definition.setNameTemplate(certificationName);
+	definition.setShortNameTemplate(certificationName);
+	definition.setName(certificationName);
+	definition.setIdentitiesToCertify(Util.asList(identityName));
+	definition.setCertifierName(certifier);
+	definition.setCertificationOwner(certGroupOwner);
+	definition.setCertificationNameTemplate(certificationName);
+
+	// Schedule task to run, passing in schedule (which has certification defintion attached)
+
+	TaskSchedule taskSchedule = scheduler.saveSchedule(schedule, false);
+	log.info("End executing Certification Rule");
+</Source>
+</Rule>

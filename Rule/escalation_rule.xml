@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="escalation rule" type="Escalation">
+  <Description>Escalation rules are used by the Escalator to figure out where to route notifiable items (work items or certification items) that have expired.
+
+Escalation rules return a string which specifies the name of the identity that should receive the escalated item.</Description>
+  <Signature returnType="String">
+    <Inputs>
+      <Argument name="log">
+        <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+      </Argument>
+      <Argument name="context">
+        <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+      </Argument>
+      <Argument name="item">
+        <Description>
+          The sailpoint.object.Notifiable to escalate.
+        </Description>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="newOwner">
+        <Description>
+          The name of the Identity object that should be the new owner of
+          the notifiable.
+        </Description>
+      </Argument>
+    </Returns>
+  </Signature>
+  <Source>import sailpoint.object.*;
+
+
+Identity currentOwner = item.getNotificationOwner(context);
+ String manager = currentOwner.getName();
+    
+ System.out.println("yes");
+  
+if ( manager != null )
+      { 
+  Identity nOwner =  currentOwner.getManager();
+  
+  String newOnwer = nOwner.getName();
+          System.out.println(newOwner);
+         return newOwner;     }
+else
+        return null;
+        
+   
+
+
+  </Source>
+</Rule>

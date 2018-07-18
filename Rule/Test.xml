@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Test">
+  <Description>Allows all objects to be selected (no filtering)</Description>
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="Test Rule Lib"/>
+  </ReferencedRules>
+  <Source>
+
+import sailpoint.object.*;
+  import sailpoint.object.ProvisioningPlan.AccountRequest;
+  import sailpoint.object.ProvisioningPlan.AttributeRequest;
+  
+     	log.error("Entering get De Provisioning Plan ");
+
+	Identity identity = context.getObjectByName(Identity.class,"a100009");
+    ProvisioningPlan newPlan = new ProvisioningPlan();
+	
+	List accountLinkList = new ArrayList();
+	
+	accountLinkList = identity.getLinks();
+	String AUTH_APP = "HR System - Employees";
+	List accountRequestList = new ArrayList();
+	List attributeRequestList = new ArrayList();
+	AccountRequest accountRequest = null;
+	AttributeRequest attributeRequest = null;
+	String applicationName = null, identityName = null;
+	AccountRequest roleRequest = null;
+	List roleAttributeRequests = new ArrayList();
+	
+	if(null != accountLinkList &amp;&amp; !accountLinkList.isEmpty()){
+	
+		for(Link accountLink : accountLinkList){
+		
+			applicationName = accountLink.getApplicationName();
+			nativeIdentity = accountLink.getNativeIdentity();
+			
+			if(null != applicationName &amp;&amp; null != nativeIdentity){
+				if(AUTH_APP.equalsIgnoreCase(applicationName)){
+				
+					// No Deprovisioning required for HR Authoritative Source
+				
+				}else{
+				
+					accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Modify , applicationName , null , nativeIdentity );
+					
+					attributeRequest = new AttributeRequest("REGION", ProvisioningPlan.Operation.Set, accountLink.getAttribute("REGION")); 
+					
+					attributeRequestList.add( attributeRequest );
+
+					accountRequest.setAttributeRequests( attributeRequestList ) ;
+					
+					accountRequestList.add( accountRequest );
+				
+				}
+				
+				if (identity.getAttribute("city").equals("Oregon") &amp;&amp; applicationName.equals("FinServ")){
+				
+					accountRequest = new AccountRequest( ProvisioningPlan.AccountRequest.Operation.Delete , "FinServ" , null , "f11298" );
+					accountRequestList.add( accountRequest );
+
+				}
+			
+		}	
+    }
+    }
+	System.out.println("accountRequestList: "+accountRequestList);
+	System.out.println("Plan: "+newPlan);
+	//newPlan.setNativeIdentity( "" ) ;
+	newPlan.setAccountRequests( accountRequestList );
+	log.error("Exiting get De Provisioning Plan ");
+	return newPlan;
+   
+</Source>
+</Rule>

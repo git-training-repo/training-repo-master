@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="LCM Build Identity ApprovalSet">
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="Approval Library"/>
+  </ReferencedRules>
+  <Source>
+    
+      import sailpoint.object.ProvisioningPlan;
+      import sailpoint.object.ProvisioningPlan.AttributeRequest;
+      import sailpoint.object.ProvisioningPlan.AccountRequest;
+      import sailpoint.object.ApprovalSet;
+      import sailpoint.object.ApprovalItem;
+      import sailpoint.object.Attributes;
+      import sailpoint.tools.Util;
+
+      ApprovalSet set = new ApprovalSet();
+      if ( plan != null ) {
+          List accountRequests = plan.getAccountRequests();
+          for ( AccountRequest request : accountRequests ) {
+              ApprovalItem item = new ApprovalItem();
+              item.setApplication(request.getApplication());
+              item.setInstance(request.getInstance());
+              item.setNativeIdentity(request.getNativeIdentity());
+              item.setOperation(request.getOperation().toString());
+              List attrRequestFlat = flattenAttributeRequests(request.getAttributeRequests());
+              if ( attrRequestFlat != null ) {
+                  item.setValue(attrRequestFlat);
+              } 
+              Attributes attributes = getAttributeRequestArguments(request.getAttributeRequests());
+              item.setAttributes(attributes);
+              
+              // for these requests comments come in on the plan
+              String comments = plan.getComments();
+              if ( Util.getString(comments) != null ) {
+                  item.setRequesterComments(comments);
+              }
+              set.add(item);
+          }
+
+          // while we are here lets annotate the plan with previousValues
+          if ( flow.equals("IdentityEditRequest") ) {
+              AccountRequest iiqRequest = plan.getAccountRequest("IIQ");    
+              if ( iiqRequest != null ) {
+                  List attributeRequests = iiqRequest.getAttributeRequests();
+                  if ( Util.size(attributeRequests) &gt; 0 ) {
+                      Identity id = context.getObject(Identity.class, identityName);
+                      if ( id != null )  {
+                          for ( AttributeRequest req : attributeRequests ) {
+                              String name = req.getName();
+                              if ( name != null ) {
+                                  // We have to be carefull here, if we see manager display
+                                  // the displayName
+                                  Object prevValue = id.getAttribute(name);
+                                  if ( prevValue != null ) {
+                                      if (name.equals("manager") ) {
+                                          String displayName = getIdentityProperty((String)prevValue, "displayName");
+                                          if ( displayName != null ) {
+                                              prevValue = displayName;
+                                          }
+                                      }
+                                      else if (prevValue instanceof Identity) {
+                                          prevValue = (String)prevValue.getDisplayableName();
+                                      }
+                                      else {
+                                      }
+                                      req.put(ProvisioningPlan.ARG_PREVIOUS_VALUE, prevValue);
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      return set;
+    
+  </Source>
+</Rule>

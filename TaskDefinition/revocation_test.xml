@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="revocation test" resultAction="Rename" subType="Administration Reports" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="applications">
+        <value>
+          <List>
+            <String>FinServ</String>
+          </List>
+        </value>
+      </entry>
+      <entry key="disableDetail" value="false"/>
+      <entry key="disableSummary" value="false"/>
+      <entry key="reportColumnOrder" value="status, recipient, requestor, type, requestId, expiration, identity, account, application, instance, entitlement, newValue, requestComments, completionComments"/>
+    </Map>
+  </Attributes>
+  <Description>Displays information about all revocations in the system and how they have been handled in detailed format.</Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="Revocation Live Report"/>
+  </Parent>
+</TaskDefinition>

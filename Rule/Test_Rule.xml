@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Test Rule">
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="Test Rule Lib"/>
+  </ReferencedRules>
+  <Source>
+import sailpoint.object.*;  
+		import sailpoint.api.SailPointContext;
+		import java.util.*; 
+		import java.util.HashMap;
+  	import sailpoint.object.EmailOptions;
+import sailpoint.object.EmailTemplate;
+
+		Identity identity = context.getObjectByName(Identity.class,"a100005");
+		  
+  	String emailTemplate = "Test Joiner Email";
+
+		Identity recipientIdentity = identity.getManager();
+		String recipient = recipientIdentity.getAttribute("email");
+
+		Map args = new HashMap();
+		args.put("employeeID",identity.getAttribute("employeeId"));
+		
+		sendEmail(recipient,null,emailTemplate,args);
+return "yay";
+  
+</Source>
+</Rule>

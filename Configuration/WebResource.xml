@@ -1,0 +1,332 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Configuration PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Configuration name="WebResource">
+  <Attributes>
+    <Map>
+      <entry key="webResources">
+        <value>
+          <List>
+            <WebResource rights="ViewApplicationStatus" url="dashboard/contentApplicationStatusDatasource.json"/>
+            <WebResource rights="ViewApplicationStatus" url="dashboard/contentApplicationStatusDatasource.jsf"/>
+            <WebResource rights="ViewCertificationCompletionChart" url="dashboard/contentCertificationCompletionStatusDataSource.json"/>
+            <WebResource rights="ViewCertificationCompletionChart" url="dashboard/contentCertificationCompletionStatusDataSource.jsf"/>
+            <WebResource rights="ViewSignoffStatus" url="dashboard/contentSignoffStatusDatasource.json"/>
+            <WebResource rights="ViewSignoffStatus" url="dashboard/contentSignoffStatusDatasource.jsf"/>
+            <WebResource rights="FullAccessActivityCategory" url="define/categories/activityCategories.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity" url="define/identity/*"/>
+            <WebResource rights="*" url="define/identity/identity.jsf">
+              <EnablingAttributes>
+                <Map>
+                  <entry key="managerStatus">
+                    <value>
+                      <Boolean>true</Boolean>
+                    </value>
+                  </entry>
+                </Map>
+              </EnablingAttributes>
+            </WebResource>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/riskScores.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/businessRoleBARInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/entitlementBARInclude.jsf"/>
+            <WebResource rights="ViewPolicy, ManagePolicy" url="define/policy/*"/>
+            <WebResource rights="ViewAlert, FullAccessAlertDefinition, ViewAlertDefinition" url="define/alerts/*"/>
+            <WebResource rights="FullAccessApplicationRiskModel" url="define/riskScores/appScores.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel, FullAccessApplicationRiskModel, FullAccessIdentityRisk, FullAccessApplicationRisk" url="define/riskScores/activityMonitoringInclude.jsf"/>
+            <WebResource rights="FullAccessApplicationRiskModel" url="define/riskScores/appComponentsInclude.jsf"/>
+            <WebResource rights="FullAccessApplicationRiskModel" url="define/riskScores/appCompositeInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel, FullAccessApplicationRiskModel, FullAccessIdentityRisk, FullAccessApplicationRisk" url="define/riskScores/bandsInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/bandOverviewInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/businessRoleBARUpdate.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/compensatingControlsInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/compositeScoringInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/customScoreInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/entitlementAttributesInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/entitlementBARAppDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/entitlementPermissionsInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/roleRiskQueryJSON.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/barOverviewInclude.jsf"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflow.jsf"/>
+            <WebResource rights="FullAccessWorkflows" url="include/include/subprocessesDataSource.json"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflowDataSource.json"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflowStepDataSource.json"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflowAutoLayoutJSON.json"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflowQueryJSON.json"/>
+            <WebResource rights="FullAccessIdentityTriggers" url="define/trigger/*"/>
+            <WebResource rights="FullAccessGroup, ManageWorkgroup, ViewWorkgroup, ViewGroups, ViewPopulations" url="define/groups/*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/modeler/*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/automatedMining/*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/roleMining/*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/miningTemplatesDataSource.xhtml"/>
+            <WebResource rights="ViewRole, ManageRole" url="monitor/tasks/viewRoleMiningResultsDataSource.json"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/search/*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/roleTabs.jsf"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/version/versionDataSource.json"/>
+            <WebResource rights="ViewApplication, ManageApplication" url="define/applications/*"/>
+            <WebResource rights="*" url="monitor/tasks/renderResults.jsf"/>
+            <WebResource rights="*" url="define/roles/modeler/roleEditor.jsf"/>
+            <WebResource rights="*" url="define/roles/modeler/permitsDataStore.json"/>
+            <WebResource rights="*" url="define/roles/modeler/requirementsDataStore.json"/>
+            <WebResource rights="*" url="define/roles/modeler/memberOfDataStore.json"/>
+            <WebResource rights="*" url="define/roles/modeler/entitlementQuery.json"/>
+            <WebResource rights="*" url="define/roles/modeler/roleTypeDefQuery.json"/>
+            <WebResource rights="*" url="define/roles/modeler/allowedPermitsQuery.json"/>
+            <WebResource rights="*" url="define/roles/modeler/allowedRequirementsQuery.json"/>
+            <WebResource rights="ManagedAttributePropertyAdministrator, ManagedAttributeProvisioningAdministrator" url="define/groups/accountGroups.jsf"/>
+            <WebResource rights="ManagedAttributePropertyAdministrator, ManagedAttributeProvisioningAdministrator, ViewAccountGroups" url="define/groups/editAccountGroup.jsf"/>
+            <WebResource rights="ManagedAttributePropertyAdministrator, ManagedAttributeProvisioningAdministrator" url="define/groups/entitlementCatalogDataSource.json"/>
+            <WebResource rights="ManagedAttributePropertyAdministrator, ManagedAttributeProvisioningAdministrator" url="define/groups/entitlementCatalogDataSource.jsf"/>
+            <WebResource rights="ManagedAttributePropertyAdministrator, ManagedAttributeProvisioningAdministrator" url="define/groups/inheritedNameOnlyAccountGroupsDataSource.json"/>
+            <WebResource rights="ViewPopulations, FullAccessGroup" url="define/groups/populationsDataSource.jsf"/>
+            <WebResource rights="ViewPopulations, FullAccessGroup" url="define/groups/populationsDataSource.json"/>
+            <WebResource rights="ViewGroups, FullAccessGroup" url="define/groups/groupsDataSource.jsf"/>
+            <WebResource rights="ViewGroups, FullAccessGroup" url="define/groups/groupsDataSource.json"/>
+            <WebResource rights="*" url="analyze/reports/viewResult.jsf"/>
+            <WebResource rights="*" url="rest/report"/>
+            <WebResource rights="FullAccessCertificationSchedule" url="monitor/scheduleCertifications/*"/>
+            <WebResource rights="ViewGroupCertification, FullAccessCertifications" url="monitor/scheduleCertifications/certificationGroup.jsf"/>
+            <WebResource rights="FullAccessCertifications" url="monitor/scheduleCertifications/editCertificationSchedule.jsf"/>
+            <WebResource rights="ReadTaskResults, FullAccessTask" url="monitor/tasks/viewTasks.jsf"/>
+            <WebResource rights="ReadTaskResults, FullAccessTask" url="monitor/tasks/viewResultsDataSource.json"/>
+            <WebResource rights="ReadTaskResults, FullAccessTask" url="monitor/tasks/viewTasksDataSource.json"/>
+            <WebResource rights="ViewRole, ManageRole" url="monitor/tasks/viewRoleMiningResultsDataSource.json"/>
+            <WebResource rights="ViewRole, ManageRole" url="monitor/tasks/taskResultStatusDataSource.json"/>
+            <WebResource rights="FullAccessTask" url="monitor/tasks/*"/>
+            <WebResource rights="FullAccessReport, FullAccessTask" url="monitor/tasks/schedulePanel.jsf"/>
+            <WebResource rights="*" url="monitor/tasks/renderResults.jsf"/>
+            <WebResource rights="FullAccessRequest" url="monitor/requests/requests.jsf"/>
+            <WebResource rights="FullAccessRequest" url="monitor/requests/request.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/analyzeTabs.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/baseGrid.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/gridStateDataSource.*"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/searchDisplayFields.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/searchRememberPanel.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/searchResultsInclude.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/searchResultsState.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/searchUserItems.jsf"/>
+            <WebResource rights="ViewCertifications, ViewRole, ViewAccountGroups, ViewActivity, ViewIdentityRequest, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity, ViewAuditLog, ViewProcessInstrumentation, ViewSyslog, ViewLink" url="analyze/suggestAttribute.jsf"/>
+            <WebResource rights="FullAccessReport" url="analyze/reports/*"/>
+            <WebResource rights="ViewAccountGroups" url="analyze/accountGroup/accountGroupDataSource.json"/>
+            <WebResource rights="ViewActivity" url="analyze/activity/activityDataSource.json"/>
+            <WebResource rights="ViewAuditLog" url="analyze/audit/auditDataSource.json"/>
+            <WebResource rights="ViewCertifications" url="analyze/certification/certificationDataSource.json"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity" url="analyze/identity/advancedIdentityDataSource.json"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity" url="analyze/identity/identityDataSource.json"/>
+            <WebResource rights="ViewIdentityRequest" url="analyze/identityRequest/identityRequestDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationApprovalOverviewDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationExecutionsDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationStepDetailsDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationStepExecutorsDataSource.json"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/processInstrumentationStepOverviewDataSource.json"/>
+            <WebResource rights="ViewRole" url="analyze/role/roleDataSource.json"/>
+            <WebResource rights="ViewSyslog" url="analyze/syslog/syslogDataSource.json"/>
+            <WebResource rights="ViewLink" url="analyze/link/linkDataSource.json"/>
+            <WebResource rights="FullAccessIdentityRisk" url="manage/riskScores/riskScores.jsf"/>
+            <WebResource rights="FullAccessIdentityRisk" url="manage/riskScores/riskScoresDataSource.json"/>
+            <WebResource rights="FullAccessIdentityRisk" url="manage/riskScores/riskScoresFilters.jsf"/>
+            <WebResource rights="FullAccessIdentityCorrelation" url="manage/correlation/*"/>
+            <WebResource rights="*" url="manage/workItems/workItems.jsf"/>
+            <WebResource rights="*" url="manage/policyViolations/policyViolations.jsf"/>
+            <WebResource rights="*" url="manage/policyViolations/policyViolationsDataSource.json"/>
+            <WebResource rights="FullAccessApplicationRisk" url="manage/riskScores/appRiskScores.jsf"/>
+            <WebResource rights="FullAccessApplicationRisk" url="manage/riskScores/appRiskScoresDataSource.json"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchRequests.jsf"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchItemsDataSource.json"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchRequestsDataSource.json"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchRequestDetails.jsf"/>
+            <WebResource rights="FullAccessProvisioningTransaction, ViewProvisioningTransaction" url="adminConsole/index.jsf">
+              <ChildResources>
+                <String>adminConsole/*</String>
+              </ChildResources>
+            </WebResource>
+            <WebResource rights="FullAccessProvisioningTransaction, ViewProvisioningTransaction" url="adminConsole/*"/>
+            <WebResource rights="FullAccessSystemConfig, FullAccessTimePeriod, FullAccessIdentityMapping, ManageScope, ViewScope, FullAccessAuditConfig, FullAccessLoginConfig, FullAccessAccountMapping, ImportFromFile, FullAccessForms, FullAccessDynamicScope, ViewQuickLinks, FullAccessOAuthClientConfiguration, ViewOAuthClientConfiguration" url="systemSetup/index.jsf">
+              <ChildResources>
+                <String>systemSetup/loginConfig.jsf</String>
+                <String>systemSetup/identities/identitySourceMappings.jsf</String>
+                <String>systemSetup/accounts/accountSourceMapping.jsf</String>
+                <String>systemSetup/appObjectConfig.jsf</String>
+                <String>systemSetup/appObjectAttribute.jsf</String>
+                <String>systemSetup/roleObjectConfig.jsf</String>
+                <String>systemSetup/system.jsf</String>
+                <String>systemSetup/scopes/*</String>
+                <String>systemSetup/lcm/*</String>
+                <String>systemSetup/timePeriods/*</String>
+                <String>systemSetup/audit.jsf</String>
+                <String>systemSetup/electronicSignatures.jsf</String>
+                <String>systemSetup/hostConfig.jsf</String>
+                <String>systemSetup/import.jsf</String>
+                <String>systemSetup/forms.jsf</String>
+                <String>systemSetup/objectAttributesDataSource.jsf</String>
+                <String>systemSetup/quicklinkPopulationsEditor.jsf</String>
+                <String>systemSetup/apiAuthentication.jsf</String>
+              </ChildResources>
+            </WebResource>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/system.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/systemCompliance.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/systemLifecycle.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/lcmConfig.jsf"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/accountSourceMapping.jsf"/>
+            <WebResource rights="ImportFromFile" url="systemSetup/import.jsf"/>
+            <WebResource rights="FullAccessForms" url="systemSetup/forms.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/electronicSignatures.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/hostConfig.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleObjectConfig.jsf"/>
+            <WebResource rights="FullAccessTimePeriod" url="systemSetup/timePeriods/*"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/identitySourceMappings.jsf"/>
+            <WebResource rights="ManageScope, ViewScope" url="systemSetup/scopes/*"/>
+            <WebResource rights="FullAccessAuditConfig" url="systemSetup/audit.jsf"/>
+            <WebResource rights="FullAccessLoginConfig" url="systemSetup/loginConfig.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/appObjectConfig.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/appObjectAttribute.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/objectAttributesDataSource.json"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/managedAttributeAttribute.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/managedAttributeConfig.jsf"/>
+            <WebResource rights="FullAccessDynamicScope, ViewQuickLinks" url="systemSetup/quicklinkPopulationsEditor.jsf"/>
+            <WebResource rights="FullAccessOAuthClientConfiguration, ViewOAuthClientConfiguration" url="systemSetup/apiAuthentication.jsf"/>
+            <WebResource rights="*" url="systemSetup/scopes/scopesSuggest.json"/>
+            <WebResource rights="ManageRules" url="include/rules/ruleEditorDataSource.json"/>
+            <WebResource rights="FullAccessBeansPage, FullAccessThreadsPage, FullAccessAboutPage, FullAccessMemoryPage, FullAccessMetersPage, FullAccessLoggingPage, FullAccessDatabasePage, FullAccessDebugPage" url="debug/index.jsf">
+              <ChildResources>
+                <String>debug/beans.jsf</String>
+                <String>debug/threads.jsf</String>
+                <String>debug/about.jsf</String>
+                <String>debug/memory.jsf</String>
+                <String>debug/meters.jsf</String>
+                <String>debug/logging.jsf</String>
+                <String>debug/database.jsf</String>
+                <String>debug/debug.jsf</String>
+                <String>debug/caches.jsf</String>
+              </ChildResources>
+            </WebResource>
+            <WebResource rights="FullAccessBeansPage" url="debug/beans.jsf"/>
+            <WebResource rights="FullAccessThreadsPage" url="debug/threads.jsf"/>
+            <WebResource rights="FullAccessAboutPage" url="debug/about.jsf"/>
+            <WebResource rights="FullAccessMemoryPage" url="debug/memory.jsf"/>
+            <WebResource rights="FullAccessMetersPage" url="debug/meters.jsf"/>
+            <WebResource rights="FullAccessLoggingPage" url="debug/logging.jsf"/>
+            <WebResource rights="FullAccessDatabasePage" url="debug/database.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/debug.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/caches.jsf"/>
+            <WebResource rights="*" url="identity/viewAccountGroupWrapper.jsf"/>
+            <WebResource rights="*" url="define/groups/counterAccountGroupsDataSource.json"/>
+            <WebResource rights="*" url="define/groups/inheritedAccountGroupsDataSource.json"/>
+            <WebResource rights="*" url="define/groups/inheritingAccountGroupsDataSource.json"/>
+            <WebResource rights="*" url="define/groups/permissionsDataSource.json"/>
+            <WebResource rights="*" url="define/groups/accountGroupMembersDataSource.json"/>
+            <WebResource rights="*" url="define/groups/accountGroupAccessDataSource.json"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/connections.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/count.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/edit.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/list.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/metersGrid.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/result.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/timeMachine.jsf"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/view.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/authQuestions.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/email.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/identitiesSettings.jsf"/>
+            <WebResource rights="ImportFromFile" url="systemSetup/importResults.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/mailSettings.jsf"/>
+            <WebResource rights="FullAccessLoginConfig" url="systemSetup/login.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/loginContent.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/miscellaneous.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/objectAttribute.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/objectConfigCommon.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/passReset.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/passwords.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleObjectAttribute.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roles.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleType.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleTypeIncludedAttributes.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleTypeIncludedAttributesDataSource.*"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleTypesDataSource.*"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/roleTypesGrid.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/smsReset.jsf"/>
+            <WebResource rights="FullAccessLoginConfig" url="systemSetup/ssoConfig.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/workItemSettings.jsf"/>
+            <WebResource rights="FullAccessDynamicScope, ViewQuickLinks" url="systemSetup/quicklinkPopulationConfiguration.jsf"/>
+            <WebResource rights="FullAccessDynamicScope, ViewQuickLinks" url="systemSetup/quicklinkPopulationQuicklinksDataSource.*"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/accountMappingsDataSource.*"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/addSource.jsf"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/deleteSource.jsf"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/editIdentityAttribute.jsf"/>
+            <WebResource rights="FullAccessAccountMapping" url="systemSetup/accounts/selectIdentitySource.jsf"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/addIdentitySource.jsf"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/addIdentityTarget.jsf"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/deleteIdentitySource.jsf"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/editIdentityAttribute.jsf"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/identityMappingsDataSource.json"/>
+            <WebResource rights="FullAccessIdentityMapping" url="systemSetup/identities/selectIdentitySource.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/additionalOptions.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/businessProcesses.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/identityPolicy.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/lifecycleActions.jsf"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/lcm/lifecycleActionsInclude.jsf"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/createBatchRequest.jsf"/>
+            <WebResource rights="ViewAccountGroups" url="analyze/accountGroup/accountGroupDataSource.*"/>
+            <WebResource rights="ViewActivity" url="analyze/activity/activityDataSource.*"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity" url="analyze/identity/advancedIdentityDataSource.*"/>
+            <WebResource rights="FullAccessApplicationRisk" url="manage/riskScores/appRiskScoresDataSource.*"/>
+            <WebResource rights="ViewAuditLog" url="analyze/audit/auditDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel, FullAccessApplicationRiskModel, FullAccessIdentityRisk, FullAccessApplicationRisk" url="define/riskScores/bandConfigJSON.*"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchItemsDataSource.*"/>
+            <WebResource rights="FullAccessBatchRequest" url="manage/batchRequest/batchRequestsDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/businessRoleScoringInclude.jsf"/>
+            <WebResource rights="ViewCertifications" url="analyze/certification/certificationDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/certificationsInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/entitlementScoringInclude.jsf"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity" url="analyze/identity/identityDataSource.*"/>
+            <WebResource rights="ViewIdentityRequest" url="analyze/identityRequest/identityRequestDataSource.*"/>
+            <WebResource rights="ViewLink" url="analyze/link/linkDataSource.*"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/miningTemplatesDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/policyViolationsBARInclude.jsf"/>
+            <WebResource rights="*" url="manage/policyViolations/policyViolationsDataSource.*"/>
+            <WebResource rights="FullAccessIdentityRiskModel" url="define/riskScores/policyViolationsInclude.jsf"/>
+            <WebResource rights="FullAccessIdentityRisk" url="manage/riskScores/riskScoresDataSource.*"/>
+            <WebResource rights="ViewRole" url="analyze/role/roleDataSource.*"/>
+            <WebResource rights="FullAccessWorkflows" url="include/subprocessesDataSource.*"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/workflowDataSource.*"/>
+            <WebResource rights="ViewSyslog" url="analyze/syslog/syslogDataSource.*"/>
+            <WebResource rights="*" url="external/*"/>
+            <WebResource rights="ViewAccountGroups" url="analyze/accountGroup/*"/>
+            <WebResource rights="ViewActivity" url="analyze/activity/*"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity, ViewPolicy, ManagePolicy, ViewRole, ManageRole" url="analyze/advanced/*"/>
+            <WebResource rights="ViewAuditLog" url="analyze/audit/*"/>
+            <WebResource rights="ViewCertifications" url="analyze/certification/*"/>
+            <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity" url="analyze/identity/*"/>
+            <WebResource rights="ViewIdentityRequest" url="analyze/identityRequest/*"/>
+            <WebResource rights="ViewLink" url="analyze/link/*"/>
+            <WebResource rights="ViewProcessInstrumentation" url="analyze/process/*"/>
+            <WebResource rights="ViewRole" url="analyze/role/*"/>
+            <WebResource rights="ViewSyslog" url="analyze/syslog/*"/>
+            <WebResource rights="*" url="certification/*"/>
+            <WebResource rights="*" url="dashboard/*"/>
+            <WebResource rights="FullAccessDebugPage" url="debug/*"/>
+            <WebResource rights="FullAccessActivityCategory" url="define/categories/*"/>
+            <WebResource rights="FullAccessWorkflows" url="define/workflow/*"/>
+            <WebResource rights="*" url="identities/identities.jsf"/>
+            <WebResource rights="ViewRole, ManageRole" url="define/roles/version/*"/>
+            <WebResource rights="*" url="identity/*"/>
+            <WebResource rights="*" url="include/*"/>
+            <WebResource rights="*" url="lcm/*"/>
+            <WebResource rights="*" url="manage/accessRequest/*"/>
+            <WebResource rights="*" url="manage/certification/*"/>
+            <WebResource rights="*" url="manage/policyViolations/*"/>
+            <WebResource rights="*" url="manage/workItems/*"/>
+            <WebResource rights="FullAccessSystemConfig" url="systemSetup/*"/>
+            <WebResource rights="*" url="ui/*"/>
+            <WebResource rights="*" url="user/*"/>
+            <WebResource rights="*" url="workitem/*"/>
+            <WebResource rights="FullAccessPlugin" url="plugins/plugins.jsf"/>
+            <WebResource rights="*" url="plugins/pluginPage.jsf"/>
+            <WebResource rights="*" url="pam/pam.jsf"/>
+            <WebResource rights="FullAccessIdentityRiskModel, ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink,DeleteIdentitySnapshot, MonitorIdentityActivity" url="define/identity/identities.jsf"/>
+            <WebResource rights="*" url="manage/accessRequest/myAccessRequests.jsf"/>
+            <WebResource rights="*" url="accessRequest/accessRequest.jsf"/>
+          </List>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+</Configuration>

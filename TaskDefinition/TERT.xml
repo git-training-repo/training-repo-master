@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="TERT" resultAction="Rename" subType="Access Review and Certification Reports" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="applicationNames">
+        <value>
+          <List>
+            <String>ICAN</String>
+          </List>
+        </value>
+      </entry>
+      <entry key="disableDetail" value="false"/>
+      <entry key="disableSummary" value="false"/>
+      <entry key="exclusions">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="reportColumnOrder" value="nativeIdentity, identity, manager, certName, certGroupName, tags, entitlementType, entitlement, status, decision, newValue, remediationCompleted, decisionMaker, comments, application, exclusionExplanation"/>
+    </Map>
+  </Attributes>
+  <Description>Displays information about the activity on the certifications in the system in detailed format.</Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="Certification Activity by Application Live Report"/>
+  </Parent>
+</TaskDefinition>

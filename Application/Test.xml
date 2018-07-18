@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.DelimitedFileConnector" featuresString="DIRECT_PERMISSIONS, NO_RANDOM_ACCESS, DISCOVER_SCHEMA" icon="enterpriseIcon" name="Test" profileClass="" type="DelimitedFile">
+  <Attributes>
+    <Map>
+      <entry key="acctAggregationEnd">
+        <value>
+          <Date>1522158354124</Date>
+        </value>
+      </entry>
+      <entry key="acctAggregationStart">
+        <value>
+          <Date>1522158354010</Date>
+        </value>
+      </entry>
+      <entry key="compositeDefinition"/>
+      <entry key="delimiter" value="|"/>
+      <entry key="file" value="/home/spadmin/Desktop/new.txt"/>
+      <entry key="filetransport" value="local"/>
+      <entry key="filterEmptyRecords">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>
+      <entry key="group.filetransport" value="local"/>
+      <entry key="group.filterEmptyRecords">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>
+      <entry key="group.partitionMode" value="auto"/>
+      <entry key="hasHeader">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>
+      <entry key="isCaseInsensitiveMerge">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="isSortedByIndexColumn">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="mergeRows">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+      <entry key="nativeChangeDetectionAttributes"/>
+      <entry key="nativeChangeDetectionEnabled">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="nativeChangeDetectionOperations"/>
+      <entry key="parseType" value="delimited"/>
+      <entry key="partitionMode" value="auto"/>
+      <entry key="stopIfLineHasWrongColumnLength">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="sysDescriptions">
+        <value>
+          <Map>
+            <entry key="en_US"/>
+          </Map>
+        </value>
+      </entry>
+      <entry key="templateApplication" value="DelimitedFile Template"/>
+    </Map>
+  </Attributes>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="Approver for Leavers"/>
+  </Owner>
+  <Schemas>
+    <Schema displayAttribute="empNo" identityAttribute="empNo" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+      <AttributeDefinition name="firstName" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="middleName" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="lastName" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="email" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="locationCode" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="employeeStatus" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="deptID" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="deptDesc" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="subDeptID" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="subDeptDesc" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="groupID" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="groupDesc" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="employeeType" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="supervisorID" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="empNo" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="jobCode" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="jobTitle" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="originalHireDate" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="lastHireDate" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="ntLogon" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="terminationDate" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="displayName" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="transferDate" type="string">
+        <Description/>
+      </AttributeDefinition>
+      <AttributeDefinition name="vendorName" type="string">
+        <Description/>
+      </AttributeDefinition>
+    </Schema>
+  </Schemas>
+  <ApplicationScorecard/>
+</Application>

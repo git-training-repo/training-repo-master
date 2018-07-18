@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="test1" resultAction="Rename" subType="Identity and User Reports" type="LiveReport">
+  <Attributes>
+    <Map>
+      <entry key="application" value="FinServ"/>
+      <entry key="disableDetail" value="false"/>
+      <entry key="disableSummary" value="false"/>
+      <entry key="reportColumnOrder" value="application, account, identity, FinServ_Test"/>
+    </Map>
+  </Attributes>
+  <Description>Report for querying accounts on extended account attributes.</Description>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" name="spadmin"/>
+  </Owner>
+  <Parent>
+    <Reference class="sailpoint.object.TaskDefinition" name="Application Account by Attribute Report"/>
+  </Parent>
+  <Signature>
+    <Inputs>
+      <Argument name="application" type="Application"/>
+      <Argument name="_attr_Test" type="string"/>
+    </Inputs>
+  </Signature>
+</TaskDefinition>

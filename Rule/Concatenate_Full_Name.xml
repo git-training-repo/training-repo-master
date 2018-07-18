@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="Concatenate Full Name" type="BuildMap">
+  <Description>This rule is used by the delimited file connector to build a map representation of the delimited data.</Description>
+  <Signature returnType="Map"/>
+  <Source>import sailpoint.object.Schema;
+import sailpoint.connector.Connector;
+import sailpoint.connector.DelimitedFileConnector;  
+
+if ( schema.getObjectType().compareTo(Connector.TYPE_ACCOUNT) == 0) {
+   HashMap map = DelimitedFileConnector.defaultBuildMap(cols, record);
+  String fname=map.get("FIRST_NAME");
+String lname=map.get("LAST_NAME");//lastName and FirstName are column headers in your csv
+String FULL_NAME=fname+" "+lname;
+map.put( "FULL_NAME", FULL_NAME );
+  
+
+String inactive = (String) map.get("STATUS");
+if (inactive.equals("I")) {
+map.put("INACTIVE", true);
+} else {
+map.put("INACTIVE", false);
+}
+
+  String eid=map.get("EID");
+
+System.out.println("eid is :"+eid);
+  String email = eid+ "@mycorp.com";
+
+map.put("EMAIL", email);
+
+  return map;
+}</Source>
+</Rule>

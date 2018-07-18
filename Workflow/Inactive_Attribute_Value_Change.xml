@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow explicitTransitions="true" name="Inactive Attribute Value Change" type="IdentityLifecycle">
+  <Variable input="true" name="event"/>
+</Workflow>

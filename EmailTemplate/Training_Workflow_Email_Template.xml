@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE EmailTemplate PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<EmailTemplate name="Training Workflow Email Template">
+  <Body>
+      
+
+$identityDisplayName, 	  
+	  
+$launcher changed the following for user: $identityDisplayName
+
+$attribute_cause
+
+- IdentityIQ System
+
+
+    </Body>
+  <Description>
+      Email Template for Training Workflow
+    </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="launcher" type="string">
+        <Description>The name of the Identity that launched the workflow.</Description>
+      </Argument>
+      <Argument name="identityDisplayName" type="string">
+        <Description>The display name of the Identity that is being changed.</Description>
+      </Argument>
+      <Argument name="attribute_cause" type="string">
+        <Description>What changed?</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>Changes to your Identity were processed</Subject>
+</EmailTemplate>
